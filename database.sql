@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS urls;
-DROP TABLE IF EXISTS urls_checks;
+DROP TABLE IF EXISTS url_checks;
 
 CREATE TABLE urls (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -8,7 +8,7 @@ CREATE TABLE urls (
 );
 
 
-CREATE TABLE urls_checks (
+CREATE TABLE url_checks (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         URL_ID INT REFERENCES urls(id),
         status_code int,
