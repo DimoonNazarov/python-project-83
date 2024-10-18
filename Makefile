@@ -1,4 +1,6 @@
 install:
+
+	psql project-83 < database.sql
 	poetry install
 dev:
 	poetry run flask --app page_analyzer:app run
