@@ -9,6 +9,7 @@ from flask import (Flask,
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+import requests
 
 
 from page_analyzer.validate import (validate_url)
@@ -21,7 +22,6 @@ from page_analyzer.db import (get_all_urls,
 
 
 load_dotenv()
-
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
@@ -152,3 +152,13 @@ def url_show(id_):
         return render_template(
             '404.html'
         ), 404
+
+
+
+@app.post("/urls/<int:id_>/checks")
+def url_check(id_):
+    url = get_urls_by_id(id_)["name"]
+    try:
+        response = requests.get(url)
+        status_code = response.status_code
+        if status_code ==
