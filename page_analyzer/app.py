@@ -1,3 +1,4 @@
+from page_analyzer.parser import get_url_data
 from flask import (Flask,
                    render_template,
                    request,
@@ -10,6 +11,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 import requests
+import http
 
 
 from page_analyzer.validate import (validate_url)
@@ -160,5 +162,26 @@ def url_check(id_):
     url = get_urls_by_id(id_)["name"]
     try:
         response = requests.get(url)
-        status_code = response.status_code
-        if status_code ==
+        if response.status_code == http.HTTPStatus.OK:
+            data = get_url_data(response.content)
+            data["status_code"]= response.status_code
+            data['url_id'] = id_
+            data['created_at'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            add_check(data)
+            flash("Страница успешно проверена", "alert-success")
+    except requests.exceptions.RequestException:
+        flash("Произошла ошибка при проверке", "alert-danger")
+
+    return redirect(url_for("url_show", id_=id_))
+
+
+
+
+
+
+
+
+
+
+

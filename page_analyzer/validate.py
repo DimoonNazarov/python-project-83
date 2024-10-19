@@ -1,8 +1,6 @@
 import validators
 from urllib.parse import urlparse
-import requests
-import http
-from bs4 import BeautifulSoup
+
 
 
 from page_analyzer.db import get_urls_by_name
@@ -39,24 +37,5 @@ def validate_url(url):
     valid = {'url': url, 'error': error}
 
     return valid
-
-
-def get_url_data(url):
-
-    response = requests.get(url)
-    if  response.status_code != http.HTTPStatus.OK:
-        raise requests.RequestException()
-    check = {"status_code": response.status_code}
-
-    soup = BeautifulSoup(response.text, "lxml")
-    h1 = soup.find("h1")
-    title  = soup.find("title")
-    description = soup.find('meta', attrs={'name': 'description'})
-
-    check['h1'] = h1.text.strip() if h1 else ""
-    check['title'] = title.text.strip() if title else ""
-    check["description"] = description["content"].strip() if description else ""
-
-    return check
 
 

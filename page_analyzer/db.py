@@ -150,7 +150,7 @@ def add_check(check: dict) -> None:
             check['h1'],
             check['title'],
             check['description'],
-            check['checked_at']
+            check['created_at']
         ))
         conn.commit()
     conn.close()
