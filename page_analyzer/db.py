@@ -54,6 +54,8 @@ def get_urls_by_id(id_: int) -> dict:
                     WHERE id=(%s)'''
         cur.execute(q_select, [id_])
         urls = cur.fetchone()
+        urls['created_at'] = urls['created_at'].date()
+
     conn.close()
 
     return urls
@@ -98,6 +100,9 @@ def get_checks_by_id(id_: int) -> dict:
                     ORDER BY id DESC'''
         cur.execute(q_select, [id_])
         checks = cur.fetchall()
+        for check in checks:
+            check['created_at'] = check['created_at'].date()
+
     conn.close()
 
     return checks
