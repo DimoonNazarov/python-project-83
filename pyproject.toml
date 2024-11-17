@@ -1,7 +1,11 @@
+
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
 description = ""
+packages = [
+    { include = "page_analyzer" },
+]
 authors = ["dimoon <nazarovdima39@mail.ru>"]
 readme = "README.md"
 
